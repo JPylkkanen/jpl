@@ -1,4 +1,4 @@
-## jpl_defer<class T, uint32_t ring_buffer_size = 1024, bool use_optional = true> requires((std::popcount(ring_buffer_size) == 1) && std::is_nothrow_move_constructible_v<T> && std::is_nothrow_destructible_v<T>)
+## jpl::concurrent_queue
 
 Multi-producer multi-consumer concurrent queue.
 
