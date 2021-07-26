@@ -15,6 +15,7 @@ Disclaimer: in .hpp files compile times are prioritized over readability, avoidi
 
 Documentation (incomplete):
 + [jpl::concurrent_queue](https://github.com/JPylkkanen/jpl/blob/master/documentation/concurrent_queue.md)
++ [thread pool (jpl::tp)](https://github.com/JPylkkanen/jpl/blob/master/documentation/thread_pool.md) 
 + [jpl::vector](https://github.com/JPylkkanen/jpl/blob/master/documentation/vector.md)
 + [jpl::function](https://github.com/JPylkkanen/jpl/blob/master/documentation/function.md)
 + [jpl_defer](https://github.com/JPylkkanen/jpl/blob/master/documentation/defer.md)
