@@ -6,7 +6,7 @@ Multi-producer multi-consumer concurrent queue.
 
 - All methods are thread-safe. No need for external synchronization.
 - The queue uses a fixed size ring buffer, and thus never does any dynamic allocations.
-- Works with any type as long it is nothrow destructible and nothrow movable. Optionally to push values by copy, the type also needs to be nothrow copyable.
+- Works with any type as long as it is nothrow destructible and nothrow movable. Optionally to push values by copy, the type also needs to be nothrow copyable.
 - High performance
 	- The core synchronization mechanism is lock-free, and for blocking methods also wait-free, although the data structure as a whole is neither, because methods can wait on per-element futexes. However, apart from extreme edge cases, any single futex should have at most 1 waiter at a time, so the use of futexes shouldn't hurt the scalability of the queue.
 	- Data layout and ring buffer indexing order have been optimized to avoid false sharing, with minimal reduction in true sharing.
@@ -19,11 +19,11 @@ Multi-producer multi-consumer concurrent queue.
 
 # Template parameteres:
 
-template<class T, ::uint32_t ring_buffer_size, bool use_optional = true>
+template\<class T, uint32_t ring_buffer_size, bool use_optional = true\>
 - T - type contained in the queue
 - ring_buffer_size - size of the internal ring buffer (must be a power of 2)
 	- When possible, ring_buffer_size should be set big enough, that it's never full, so that push() never has to block.
-- use_optional - This configures whether or not to return std::optional<T> or plain T from try_pop()
+- use_optional - This configures whether to return std::optional\<T\> or plain T from try_pop()
 	- Some types have a natural null state. In such case wrapping the type in std::optional is pointless, and it makes more sense to return a default constructed value to denote failure in try_pop().
 
 # Macro config:
@@ -49,13 +49,13 @@ This version can perform slightly better than other one.
 - void push(T&& val) noexcept;
 Moves a value to the queue. If the internal ring buffer is full, blocks until another thread pops values from the queue.
 
-- void push(const T& val) noexcept requires(::std::is_nothrow_copy_constructible_v<T>);
+- void push(const T& val) noexcept requires(::std::is_nothrow_copy_constructible_v\<T\>);
 Copies a value to the queue. If the internal ring buffer is full, blocks until another thread pops values from the queue.
 
 - bool try_push(T&& val) noexcept;
 Tries to move a value to the queue. Returns true, if successful. If the internal ring buffer is full, returns false.
 
-- bool try_push(const T& val) noexcept requires(::std::is_nothrow_copy_constructible_v<T>);
+- bool try_push(const T& val) noexcept requires(::std::is_nothrow_copy_constructible_v\<T\>);
 Tries to copy a value to the queue. Returns true, if successful. If the internal ring buffer is full, returns false.
 
 - There are no methods such as empty() or size(), because those don't have any meaning in a multi-producer multi-consumer scenario, where the result could be obsolete before you even have a chance to check it.
